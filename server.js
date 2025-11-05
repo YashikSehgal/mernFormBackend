@@ -13,7 +13,15 @@ dotenv.config({
 });
 
 const app = express();
-app.use(cors({ origin: 'https://mernformfrontend.netlify.app' }));
+
+// Configure CORS to allow requests from your frontend
+const corsOptions = {
+  origin: "https://mernformfrontend.netlify.app", // Your frontend URL
+  methods: "GET, POST",  // Allowed HTTP methods
+  allowedHeaders: "Content-Type, Authorization",  // Allowed headers
+};
+
+app.use(cors(corsOptions));  // Use CORS with custom options
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
