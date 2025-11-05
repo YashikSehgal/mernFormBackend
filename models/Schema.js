@@ -1,0 +1,30 @@
+import mongoose from "mongoose";
+
+const userSchema = new mongoose.Schema(
+    {
+        name:{
+            type: String,
+            required: true,
+        },
+        age: {
+            type: Number,
+            required: true,
+        },
+        message :{
+            type: String,
+            required: true,
+        },
+        email:{
+            type: String,
+            required: true,
+        },
+        image: {
+            type: [String],
+            required: true,
+        }
+    }
+);
+
+const Model = mongoose.model("Model", userSchema, "myCollection");
+
+export default Model;
