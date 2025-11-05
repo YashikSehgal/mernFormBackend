@@ -52,13 +52,13 @@ app.get("/collectionData", async (req, res) => {
 // 🟢 Multiple image upload
 app.post("/addUser", upload.array("images", 5), async (req, res) => {
   try {
+    console.log("Request Body:", req.body); // Log incoming form data
+    console.log("Uploaded Files:", req.files); // Log files uploaded
     const { name, age, message, email } = req.body;
-    
+
     const imagePaths = req.files.map(
-        (file) => `${req.protocol}://${req.get("host")}/uploads/${path.basename(file.path)}`
-      );
-
-
+      (file) => `${req.protocol}://${req.get("host")}/uploads/${path.basename(file.path)}`
+    );
 
     if (!name || !age || !message || !email || imagePaths.length === 0) {
       return res.status(400).json({ error: "All fields are required!" });
@@ -70,12 +70,12 @@ app.post("/addUser", upload.array("images", 5), async (req, res) => {
       age,
       message,
       email,
-      image: imagePaths, // 👈 store as array
+      image: imagePaths,
     });
 
     const savedUser = await newUser.save();
 
-    // ✉️ Send email with attachments
+    // Send email with attachments (use proper email credentials)
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
